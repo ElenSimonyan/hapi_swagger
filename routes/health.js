@@ -5,7 +5,7 @@ var tooBusy = require("toobusy-js")
 
 routes.push({
   method: 'GET',
-  path: '/_health/',
+  path: '/_health',
   config:{
     description: 'Health Check',
     tags: ['api','lsq','Health'],
