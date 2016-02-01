@@ -1,5 +1,5 @@
 {
     "watch": "routes/*.js,app.js",
     "isStartedWhen": "running",
-    "healthCheck": "/_health"
+    "healthCheck": "/health"
 }
