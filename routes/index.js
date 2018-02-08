@@ -1,14 +1,14 @@
 'use strict'
-var routes = []
-var _routes = [
+const routes = []
+const _routes = [
 	require('./health'),
 	require('./api')
 ]
 
-_routes.forEach(function(_route) {
+_routes.forEach((_route) => {
 
 	if (typeof _route === 'object' && _route.length)
-		_route.forEach(function(_r) { 
+		_route.forEach((_r) => {
 			routes.push(_r)
 		})
 	else if (typeof _route === 'object')

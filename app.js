@@ -1,44 +1,40 @@
-var HapiSwagger = require('hapi-swagger')
-var Hapi =require('hapi')
-var Inert = require('inert')
-var Vision = require('vision')
-var routes = require('./routes')
-var pack = require('./package.json')
+const HapiSwagger = require('hapi-swagger')
+const Hapi =require('hapi')
+const Inert = require('inert')
+const Vision = require('vision')
+const routes = require('./routes')
+const Pack = require('./package.json')
 
-var swaggerOptions = {
-  apiVersion: pack.version
-  ,documentationPath: '/'
-  ,enableDocumentationPage: true
-  ,endpoint:'/_docs'
-  ,info: {
-    title: pack.name,
-    description: pack.description
-  }
-}
+const options = {
+    info: {
+        title: Pack.name,
+        version: Pack.version,
 
-var server = new Hapi.Server()
+    },
+    documentationPath: process.env.NODE_ENV === 'production' ? '/swagger-docs-4tgw5e3t5erfdsrsdfvx' : '/',
+};
+
+const server = new Hapi.Server()
 
 server.connection({ 
   port: process.env.PORT || 3000,
-  labels:['tcp']
 })
 
 server.register([
-  Inert,
-  Vision,
-  {
-    register:HapiSwagger
-   ,options:swaggerOptions
-  }
-  ], start)
+    Vision,
+    Inert,
+    {
+        'register': HapiSwagger,
+        'options': options
 
-function start() {
+    }], (err) => {
+    if (err) {
+        throw err;
+    }
+    server.route(routes);
+});
 
-  server.start( function(err) {
-    if (err) throw err
-    routes.forEach( function(route) {
-       server.route(route)
-     })
-    console.log('Server running at:', server.info.uri)
-  })
-}
+server.start((err) => {
+    if (err) throw err;
+    console.log('Server running at:', server.info.uri);
+});

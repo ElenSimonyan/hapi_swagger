@@ -1,7 +1,7 @@
 'use strict'
-var routes = []
+const routes = []
 
-var tooBusy = require("toobusy-js")
+const tooBusy = require("toobusy-js")
 
 routes.push({
   method: 'GET',
@@ -9,7 +9,7 @@ routes.push({
   config:{
     description: 'Health Check',
     tags: ['api','lsq','Health'],
-    handler: function (request, reply) {
+    handler: (request, reply) => {
       reply(tooBusy.lag()+"")
     }
   }
